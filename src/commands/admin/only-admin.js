@@ -5,25 +5,23 @@ const {
 } = require("../../utils/database");
 
 const { InvalidParameterError, WarningError } = require(`${BASE_DIR}/errors`);
-
 const { PREFIX } = require(`${BASE_DIR}/config`);
 
 module.exports = {
   name: "only-admin",
-  description: "Permite que só administradores utilizem meus comandos.",
+  description: "Ativa o modo 'só os brabos' — apenas administradores podem usar meus comandos.",
   commands: [
     "only-admin",
     "only-adm",
     "only-administrator",
-    "only-administrators",
     "only-admins",
     "so-adm",
     "so-admin",
     "so-administrador",
-    "so-administradores",
     "so-admins",
   ],
   usage: `${PREFIX}only-admin 1`,
+
   /**
    * @param {CommandHandleProps} props
    * @returns {Promise<void>}
@@ -31,7 +29,7 @@ module.exports = {
   handle: async ({ args, sendReply, sendSuccessReact, remoteJid }) => {
     if (!args.length) {
       throw new InvalidParameterError(
-        "Você precisa digitar 1 ou 0 (ligar ou desligar)!"
+        "📛 Faltou o argumento! Digita 1 pra ativar ou 0 pra desativar, não é difícil."
       );
     }
 
@@ -40,7 +38,7 @@ module.exports = {
 
     if (!onlyAdminOn && !onlyAdminOff) {
       throw new InvalidParameterError(
-        "Você precisa digitar 1 ou 0 (ligar ou desligar)!"
+        "🤔 Argumento inválido. É 1 ou 0, simples assim. Não complica."
       );
     }
 
@@ -49,9 +47,7 @@ module.exports = {
 
     if (hasActive || hasInactive) {
       throw new WarningError(
-        `O recurso de somente admins usarem meus comandos já está ${
-          onlyAdminOn ? "ativado" : "desativado"
-        }!`
+        `⚠️ O modo 'só os chefes' já está ${onlyAdminOn ? "ativado" : "desativado"}! Vai prestar atenção antes de mandar comando à toa.`
       );
     }
 
@@ -66,7 +62,7 @@ module.exports = {
     const context = onlyAdminOn ? "ativado" : "desativado";
 
     await sendReply(
-      `Recurso de somente admins usarem meus comandos ${context} com sucesso!`
+      `🔒 Modo 'somente admins' ${context} com sucesso!\nAgora só quem manda pode usar meus comandos. O resto… só assiste.`
     );
   },
 };
