@@ -22,17 +22,13 @@ module.exports = {
   handle: async ({ socket, remoteJid, sendSuccessReply, sendErrorReply }) => {
     try {
       await socket.groupSettingUpdate(remoteJid, "not_announcement");
-      await sendSuccessReply("Grupo aberto com sucesso!");
+      await sendSuccessReply("🚪 Grupo aberto, podem fazer bagunça... Mas lembrem que quem manda aqui sou eu. 😎");
     } catch (error) {
       await sendErrorReply(
-        "Para abrir o grupo, eu preciso ser administrador dele!"
+        "🤷‍♂️ Pra eu abrir esse grupo, preciso ser administrador. Tenta arrumar isso aí antes de pedir favores."
       );
       errorLog(
-        `Ocorreu um erro ao abrir o grupo! Causa: ${JSON.stringify(
-          error,
-          null,
-          2
-        )}`
+        `Erro ao abrir o grupo! Detalhes: ${JSON.stringify(error, null, 2)}`
       );
     }
   },
