@@ -1,5 +1,4 @@
 const { setPrefix } = require(`${BASE_DIR}/utils/database`);
-
 const { PREFIX } = require(`${BASE_DIR}/config`);
 const { InvalidParameterError } = require(`${BASE_DIR}/errors`);
 
@@ -25,17 +24,19 @@ module.exports = {
    */
   handle: async ({ remoteJid, args, sendSuccessReply }) => {
     if (!args.length) {
-      throw new InvalidParameterError("Você deve fornecer um prefixo!");
+      throw new InvalidParameterError("😒 Você tem que me dizer qual prefixo usar, né?");
     }
 
     if (args.length !== 1) {
-      throw new InvalidParameterError("O prefixo deve ser apenas 1 caractere!");
+      throw new InvalidParameterError("🙄 O prefixo deve ser só *1* caractere. Vamos lá, foco!");
     }
 
     const newPrefix = args[0];
 
     setPrefix(remoteJid, newPrefix);
 
-    await sendSuccessReply(`Prefixo alterado para: ${newPrefix} neste grupo!`);
+    await sendSuccessReply(`😎 Pronto, o prefixo agora é: *${newPrefix}* neste grupo!  
+Espero que estejam à altura desse novo padrão de excelência. ✨  
+Não me agradeçam... ainda. 😏`);
   },
 };
