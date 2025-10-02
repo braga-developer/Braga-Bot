@@ -20,6 +20,7 @@ module.exports = {
     "welkon",
   ],
   usage: `${PREFIX}welcome (1/0)`,
+
   /**
    * @param {CommandHandleProps} props
    * @returns {Promise<void>}
@@ -27,16 +28,16 @@ module.exports = {
   handle: async ({ args, sendReply, sendSuccessReact, remoteJid }) => {
     if (!args.length) {
       throw new InvalidParameterError(
-        "Você precisa digitar 1 ou 0 (ligar ou desligar)!"
+        "📢 Vai digitar 1 ou 0, ou quer que eu leia sua mente agora?"
       );
     }
 
-    const welcome = args[0] == "1";
-    const notWelcome = args[0] == "0";
+    const welcome = args[0] === "1";
+    const notWelcome = args[0] === "0";
 
     if (!welcome && !notWelcome) {
       throw new InvalidParameterError(
-        "Você precisa digitar 1 ou 0 (ligar ou desligar)!"
+        "🧠 É só *1* pra ativar ou *0* pra desativar. Nem isso consegue?"
       );
     }
 
@@ -45,9 +46,7 @@ module.exports = {
 
     if (hasActive || hasInactive) {
       throw new WarningError(
-        `O recurso de boas-vindas já está ${
-          welcome ? "ativado" : "desativado"
-        }!`
+        `😒 O recurso de boas-vindas já está ${welcome ? "ligado" : "desligado"}, parabéns pela tentativa inútil.`
       );
     }
 
@@ -59,8 +58,11 @@ module.exports = {
 
     await sendSuccessReact();
 
-    const context = welcome ? "ativado" : "desativado";
+    const context = welcome ? "⚡ ativado" : "💤 desativado";
 
-    await sendReply(`Recurso de boas-vindas ${context} com sucesso!`);
+    await sendReply(
+      `✔️ Recurso de boas-vindas ${context} com sucesso.\n` +
+      `Agora me deixem continuar sendo perfeito(a) em paz. 😌`
+    );
   },
 };
