@@ -24,18 +24,17 @@ module.exports = {
     sendWaitReact,
     sendImageFromFile,
     sendVideoFromFile,
+    sendErrorReply,
   }) => {
     if (!isImage && !isVideo) {
-      throw new InvalidParameterError(
-        "Você precisa marcar uma imagem/vídeo ou responder a uma imagem/vídeo para revelá-la"
+      return sendErrorReply(
+        "E aí, qual é a graça? Marca uma imagem ou vídeo pra eu revelar, por favor!"
       );
     }
 
     await sendWaitReact();
 
-    const mediaCaption = `Aqui está sua ${
-      isImage ? "imagem" : "vídeo"
-    } revelada!`;
+    const mediaCaption = `Olha só, sua ${isImage ? "imagem" : "vídeo"} foi desmascarado! 🎉`;
 
     const outputPath = path.resolve(
       TEMP_DIR,
@@ -82,7 +81,9 @@ module.exports = {
       }
     } catch (error) {
       console.error("Erro geral:", error);
-      throw new Error("Ocorreu um erro ao processar a mídia. Tente novamente.");
+      return sendErrorReply(
+        "Deu ruim ao revelar sua mídia. Será que não tentou me enganar? Tenta de novo aí."
+      );
     } finally {
       const cleanFile = (filePath) => {
         if (filePath && fs.existsSync(filePath)) {
