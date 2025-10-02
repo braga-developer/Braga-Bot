@@ -4,6 +4,7 @@ const {
   OWNER_NUMBER,
   ONWER_LID,
 } = require(`${BASE_DIR}/config`);
+
 const { DangerError, InvalidParameterError } = require(`${BASE_DIR}/errors`);
 const {
   toUserOrGroupJid,
@@ -13,13 +14,10 @@ const {
 
 module.exports = {
   name: "ban",
-  description: "Removo um membro do grupo",
+  description: "Remove um membro do grupo com classe (ou não)",
   commands: ["ban", "kick"],
-  usage: `${PREFIX}ban @marcar_membro 
-  
-ou 
+  usage: `${PREFIX}ban @marcar_membro\n\nou\n\n${PREFIX}ban (respondendo uma mensagem)`,
 
-${PREFIX}ban (mencionando uma mensagem)`,
   /**
    * @param {CommandHandleProps} props
    * @returns {Promise<void>}
@@ -38,34 +36,33 @@ ${PREFIX}ban (mencionando uma mensagem)`,
     try {
       if (!args.length && !isReply) {
         throw new InvalidParameterError(
-          "Você precisa mencionar ou marcar um membro!"
+          "👀 Cadê o @ ou a mensagem respondida? Quer que eu chute alguém aleatório?"
         );
       }
 
       const userId = toUserOrGroupJid(args[0]);
-
       const memberToRemoveJid = isReply ? replyJid : userId;
       const memberToRemoveNumber = onlyNumbers(memberToRemoveJid);
 
       if (!memberToRemoveJid) {
-        throw new InvalidParameterError("Membro inválido!");
+        throw new InvalidParameterError("❌ Alvo inválido. Nem sei quem é essa pessoa.");
       }
 
       if (memberToRemoveJid === userJid) {
-        throw new DangerError("Você não pode remover você mesmo!");
+        throw new DangerError("🪞 Tá tentando se banir? Autoestima tá em dia, hein?");
       }
 
       if (
         memberToRemoveNumber === OWNER_NUMBER ||
         memberToRemoveNumber + "@lid" === ONWER_LID
       ) {
-        throw new DangerError("Você não pode remover o dono do bot!");
+        throw new DangerError("🤡 Eu hein, tentando quicar o dono do bot? Boa sorte na próxima vida.");
       }
 
       const botJid = toUserJid(BOT_NUMBER);
 
       if (memberToRemoveJid === botJid) {
-        throw new DangerError("Você não pode me remover!");
+        throw new DangerError("😤 Me banir? A ousadia bateu forte aí, né?");
       }
 
       await socket.groupParticipantsUpdate(
@@ -76,11 +73,14 @@ ${PREFIX}ban (mencionando uma mensagem)`,
 
       await sendSuccessReact();
 
-      await sendReply("Membro removido com sucesso!");
+      await sendReply(
+        "✅ Membro removido com sucesso!\n🚪 Que sirva de exemplo pros próximos."
+      );
     } catch (error) {
       console.log(error);
+
       await sendErrorReply(
-        `Ocorreu um erro ao remover o membro: ${error.message}`
+        `❌ Não consegui remover o membro:\n${error.message || "Erro desconhecido"}`
       );
     }
   },
