@@ -1,8 +1,7 @@
 const {
   updateIsActiveGroupRestriction,
+  isActiveGroupRestriction,
 } = require(`${BASE_DIR}/utils/database`);
-
-const { isActiveGroupRestriction } = require(`${BASE_DIR}/utils/database`);
 
 const { WarningError, InvalidParameterError } = require(`${BASE_DIR}/errors`);
 const { PREFIX } = require(`${BASE_DIR}/config`);
@@ -19,21 +18,21 @@ module.exports = {
    */
   handle: async ({ remoteJid, isGroup, args, sendSuccessReply }) => {
     if (!isGroup) {
-      throw new WarningError("Este comando só deve ser usado em grupos!");
+      throw new WarningError("🙄 Só em grupo, tá? Não me faça repetir.");
     }
 
     if (!args.length) {
       throw new InvalidParameterError(
-        "Você precisa digitar 1 ou 0 (ligar ou desligar)!"
+        "🤷‍♂️ Digita 1 pra ligar, 0 pra desligar. Fácil, né?"
       );
     }
 
-    const antiEventOn = args[0] == "1";
-    const antiEventOff = args[0] == "0";
+    const antiEventOn = args[0] === "1";
+    const antiEventOff = args[0] === "0";
 
     if (!antiEventOn && !antiEventOff) {
       throw new InvalidParameterError(
-        "Você precisa digitar 1 ou 0 (ligar ou desligar)!"
+        "🧠 Só aceita 1 ou 0, meu filho. Não complica."
       );
     }
 
@@ -45,16 +44,16 @@ module.exports = {
 
     if (hasActive || hasInactive) {
       throw new WarningError(
-        `O recurso de anti-event já está ${
-          antiEventOn ? "ativado" : "desativado"
-        }!`
+        `😴 Já tá ${antiEventOn ? "ligado" : "desligado"}. Para de insistir!`
       );
     }
 
     updateIsActiveGroupRestriction(remoteJid, "anti-event", antiEventOn);
 
-    const status = antiEventOn ? "ativado" : "desativado";
+    const status = antiEventOn ? "⚔️ ativado" : "💤 desativado";
 
-    await sendSuccessReply(`Anti-event ${status} com sucesso!`);
+    await sendSuccessReply(
+      `✔️ Anti-event ${status} com sucesso! Eventos chato? Tô cuidando disso. 😎`
+    );
   },
 };
