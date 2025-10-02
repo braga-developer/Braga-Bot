@@ -13,6 +13,7 @@ module.exports = {
     "close-group",
   ],
   usage: `${PREFIX}fechar`,
+
   /**
    * @param {CommandHandleProps} props
    * @returns {Promise<void>}
@@ -20,17 +21,18 @@ module.exports = {
   handle: async ({ socket, remoteJid, sendSuccessReply, sendErrorReply }) => {
     try {
       await socket.groupSettingUpdate(remoteJid, "announcement");
-      await sendSuccessReply("Grupo fechado com sucesso!");
+
+      await sendSuccessReply(
+        "🔒 Grupo fechado com sucesso!\n" +
+        "Agora só os chefes falam. Quem quiser reclamar, manda um e-mail… que eu vou ignorar. 😌"
+      );
     } catch (error) {
       await sendErrorReply(
-        "Para fechar o grupo, eu preciso ser administrador dele!"
+        "😤 Eu até tentaria fechar o grupo, mas né… preciso ser ADM antes de sair bancando o tirano."
       );
+
       errorLog(
-        `Ocorreu um erro ao fechar o grupo! Causa: ${JSON.stringify(
-          error,
-          null,
-          2
-        )}`
+        `❌ Erro ao tentar fechar o grupo:\n${JSON.stringify(error, null, 2)}`
       );
     }
   },
