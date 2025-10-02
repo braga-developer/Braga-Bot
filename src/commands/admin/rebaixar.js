@@ -4,9 +4,10 @@ const { errorLog } = require(`${BASE_DIR}/utils/logger`);
 
 module.exports = {
   name: "rebaixar",
-  description: "Rebaixa um administrador para membro comum",
+  description: "Tira o poderzinho de admin de quem já se achou demais.",
   commands: ["rebaixar", "rebaixa", "demote"],
   usage: `${PREFIX}rebaixar @usuario`,
+
   /**
    * @param {CommandHandleProps} props
    * @returns {Promise<void>}
@@ -20,24 +21,22 @@ module.exports = {
     sendErrorReply,
   }) => {
     if (!isGroup(remoteJid)) {
-      return sendWarningReply("Este comando só pode ser usado em grupo !");
+      return sendWarningReply("📛 Esse comando só funciona em grupo. Nem tenta no privado, por favor.");
     }
 
     if (!args.length || !args[0]) {
-      return sendWarningReply(
-        "Por favor, marque um administrador para rebaixar."
-      );
+      return sendWarningReply("🫵 Marca alguém primeiro, gênio. Preciso saber quem você quer rebaixar.");
     }
 
     const userId = toUserOrGroupJid(args[0]);
 
     try {
       await socket.groupParticipantsUpdate(remoteJid, [userId], "demote");
-      await sendSuccessReply("Usuário rebaixado com sucesso!");
+      await sendSuccessReply("🪫 Usuário rebaixado com sucesso! O cargo subiu à cabeça? Problema resolvido.");
     } catch (error) {
       errorLog(`Erro ao rebaixar administrador: ${error.message}`);
       await sendErrorReply(
-        "Ocorreu um erro ao tentar rebaixar o usuário. Eu preciso ser administrador do grupo para rebaixar outros administradores!"
+        "🚫 Não consegui rebaixar o ser. Provavelmente porque eu não sou admin — que ironia, né?"
       );
     }
   },
