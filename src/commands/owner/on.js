@@ -1,5 +1,6 @@
 const { PREFIX } = require(`${BASE_DIR}/config`);
 const { activateGroup } = require(`${BASE_DIR}/utils/database`);
+const { WarningError } = require(`${BASE_DIR}/errors`);
 
 module.exports = {
   name: "on",
@@ -12,11 +13,13 @@ module.exports = {
    */
   handle: async ({ sendSuccessReply, remoteJid, isGroup }) => {
     if (!isGroup) {
-      throw new WarningError("Este comando deve ser usado dentro de um grupo.");
+      throw new WarningError("😑 Esse comando só funciona em grupo, né... tenta de novo.");
     }
 
     activateGroup(remoteJid);
 
-    await sendSuccessReply("Bot ativado no grupo!");
+    await sendSuccessReply(`⚡ Adivinha quem voltou?  
+Isso mesmo, *EU*. Pronta pra botar ordem nessa bagunça. 😎  
+Aproveitem enquanto dura. 👑`);
   },
 };
