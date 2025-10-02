@@ -1,13 +1,14 @@
-/**
- * Utilize este arquivo para definir as mensagens de boas-vindas e despedidas do grupo.
- * As mensagens podem conter a menção ao membro que entrou ou saiu do grupo.
- * Você pode personalizar as mensagens conforme necessário.
- *
- * Para colocar a menção ao membro, use "@member" na mensagem.
- *
- * @author Dev Gui
- */
 module.exports = {
-  welcomeMessage: "Seja bem vindo ao nosso grupo, @member!",
-  exitMessage: "Poxa, @member saiu do grupo... Sentiremos sua falta!",
-};
+  welcomeMessage: `
+🌟 *SEJA BEM-VINDO(A) AO GRUPO!* 🌟
+
+🎉 *Que bom te ver por aqui!* 🎉
+
+⟩ Aqui a zoeira é garantida e a resenha nunca para! 😎
+
+⚠️ *Atenção:* Quem não seguir as regras será removido sem aviso prévio.
+
+🔥 *Agora é só soltar a criatividade, fazer novos amigos e curtir a vibe do grupo!* 🔥
+
+*Seja muito bem-vindo(a) e aproveite!* 🚀
+`,
