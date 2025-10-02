@@ -1,7 +1,4 @@
 /**
- * Desenvolvido por: Mkg
- * Refatorado por: Dev Gui
- *
  * @author Dev Gui
  */
 const {
@@ -24,23 +21,29 @@ module.exports = {
    */
   handle: async ({ remoteJid, sendSuccessReply, args, isGroup, replyJid }) => {
     if (!isGroup) {
-      throw new DangerError("Este comando só pode ser usado em grupos.");
+      throw new DangerError(
+        "Olha, esse comando é VIP só para grupos, beleza? Aqui não rola conversa de um pra um."
+      );
     }
 
     if (!args.length) {
       throw new DangerError(
-        `Você precisa mencionar um usuário para desmutar.\n\nExemplo: ${PREFIX}unmute @fulano`
+        `E aí, não sabe quem liberar? Menciona alguém direito!\n\nExemplo: ${PREFIX}unmute @fulano`
       );
     }
 
     const userId = replyJid ? replyJid : toUserOrGroupJid(args[0]);
 
     if (!checkIfMemberIsMuted(remoteJid, userId)) {
-      throw new WarningError("Este usuário não está silenciado!");
+      throw new WarningError(
+        "Calma aí, o(a) figurinha já tá com microfone liberado, não precisa desmutar!"
+      );
     }
 
     unmuteMember(remoteJid, userId);
 
-    await sendSuccessReply("Usuário desmutado com sucesso!");
+    await sendSuccessReply(
+      "Olha só quem voltou a falar! Usuário desmutado com sucesso! 🎉"
+    );
   },
 };
