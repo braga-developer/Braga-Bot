@@ -30,7 +30,7 @@ module.exports = {
   }) => {
     if (!isReply || !isImage) {
       throw new InvalidParameterError(
-        "Você precisa responder a uma mensagem que contenha uma imagem!"
+        "📸 Você precisa *responder* a uma imagem, né querido(a)? Não adivinho não 😒"
       );
     }
 
@@ -41,7 +41,6 @@ module.exports = {
 
       if (fs.existsSync(menuImagePath)) {
         backupPath = path.join(ASSETS_DIR, "images", "takeshi-bot-backup.png");
-
         fs.copyFileSync(menuImagePath, backupPath);
       }
 
@@ -53,11 +52,12 @@ module.exports = {
 
       fs.renameSync(tempPath, menuImagePath);
 
-      await sendSuccessReply("Imagem do menu atulizada com sucesso !");
+      await sendSuccessReply(`🖼️ Imagem do menu atualizada com sucesso!  
+Visual novo, mesma perfeição de sempre. 😎✨`);
     } catch (error) {
       errorLog(`Erro ao alterar imagem do menu:  ${error}`);
       await sendErrorReply(
-        "Ocorreu um erro ao tentar alterar a imagem do menu. Por favor, tente novamente."
+        "❌ Deu ruim ao tentar mudar a imagem do menu. Tenta de novo mais tarde, vai..."
       );
     }
   },
