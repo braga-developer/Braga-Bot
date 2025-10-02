@@ -7,7 +7,7 @@ const { spawn } = require("child_process");
 module.exports = {
   name: "play",
   description: "Busca e baixa vídeos do YouTube e converte para MP3 usando FFmpeg",
-  commands: ["play", "music", "ytmp3", "playaudio"],
+  commands: ["musica", "music", "ytmp3", "playaudio"],
   usage: `${PREFIX}play <nome da música>`,
 
   handle: async function (data) {
