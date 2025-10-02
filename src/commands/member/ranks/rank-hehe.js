@@ -2,10 +2,10 @@ const { PREFIX } = require(`${BASE_DIR}/config`);
 const { InvalidParameterError } = require(`${BASE_DIR}/errors`);
 
 module.exports = {
-  name: "transante",
-  description: "🔥 Rank dos membros mais transantes do grupo!",
-  commands: ["rank-transante", "transoumais", "sexometro"],
-  usage: `${PREFIX}transante`,
+  name: "hehe",
+  description: "😏 Rank dos que mais deram hehe no grupo!",
+  commands: ["rank-hehe", "hehemetro", "quemdeumais", "transou"],
+  usage: `${PREFIX}hehe`,
 
   handle: async ({ sendText, getGroupMetadata, chatId, isGroup }) => {
     if (!isGroup) {
@@ -22,24 +22,22 @@ module.exports = {
     const shuffled = participants.sort(() => Math.random() - 0.5);
 
     let lista = `╭━─━─━─━─━─━─━─━─━─━╮\n`;
-    lista += `   🔥 *RANK DOS TRANSANTES* 🔥\n`;
+    lista += `   😏 *RANK QUEM DEU MAIS HEHE* 😏\n`;
     lista += `╰━─━─━─━─━─━─━─━─━─━╯\n\n`;
 
-    const posicoes = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
-
-    shuffled.slice(0, 10).forEach((participant, i) => {
-      const transas = Math.floor(Math.random() * 200) + 1;
-      const desempenho = ["🌟", "💫", "✨", "⭐", "🎯"][Math.floor(Math.random() * 5)];
-      lista += `${posicoes[i]} @${participant.id.split('@')[0]} - *${transas} transas* ${desempenho}\n`;
+    shuffled.forEach((participant, i) => {
+      const vezes = Math.floor(Math.random() * 100) + 1;
+      const emoji = vezes > 80 ? "🔥" : vezes > 50 ? "💦" : "😳";
+      lista += `*${i + 1}.* @${participant.id.split('@')[0]} - *${vezes} vezes* ${emoji}\n`;
     });
 
-    const [primeiro, segundo, terceiro] = shuffled;
+    const campeao = shuffled[Math.floor(Math.random() * shuffled.length)];
+    const experiencia = ["Iniciante", "Intermediário", "Avançado", "Profissional", "Lenda"][Math.floor(Math.random() * 5)];
 
     lista += `\n━━━━━━━━━━━━━━━━━━━━━━\n`;
-    lista += `🏆 *PÓDIO DOS TRANSANTES* 🏆\n\n`;
-    lista += `🥇 Ouro: @${primeiro.id.split('@')[0]} 👑\n`;
-    lista += `🥈 Prata: @${segundo.id.split('@')[0]} 💎\n`;
-    lista += `🥉 Bronze: @${terceiro.id.split('@')[0]} 🔥\n`;
+    lista += `👑 *Mestre do Hehe:* @${campeao.id.split('@')[0]} 🎯\n`;
+    lista += `📊 *Nível:* ${experiencia} 🏆\n`;
+    lista += `😏 *Status:* Ativo e dando hehe! 💕\n`;
     lista += `━━━━━━━━━━━━━━━━━━━━━━`;
 
     await sendText(lista, shuffled.map(p => p.id));
